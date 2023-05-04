@@ -5,7 +5,7 @@ import Home from './components/Home';
 import Products from './components/Products';
 import ProductDetail from './components/ProductDetail';
 import Toolbar from './components/Toolbar';
-import axios from "axios";
+
 
 function App() {
   return (
