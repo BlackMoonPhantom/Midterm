@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 function Home() {
   return (
     <div>
-      <h1>Home Page</h1>
+      <h1>My Midterm</h1>
+      <h2>Home Page</h2>
       <Link to="/products">Go to Products</Link>
     </div>
   );
