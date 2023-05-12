@@ -66,3 +66,16 @@ a {
   color: #fff;
   text-decoration: none;
 }
+
+#price {
+  text-decoration: underline;
+}
+
+img {
+  height: 550px; ;
+  width: auto;
+}
+
+h3{
+  text-decoration: underline;
+}

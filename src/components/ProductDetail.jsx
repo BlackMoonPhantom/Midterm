@@ -41,7 +41,7 @@ function ProductDetail() {
       <h2>{product.title}</h2>
       <img src={product.image} alt={product.name} />
       <p>{product.description}</p>
-      <p>{product.price}</p>
+      <p id='price'>{product.price}</p>
       <button onClick={handleBack}>Back</button>
     </div>
   );
