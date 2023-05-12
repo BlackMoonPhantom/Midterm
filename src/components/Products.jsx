@@ -4,7 +4,7 @@ import useFetch from '../hooks/useFetch';
 
 function Products() {
   const [products, setProducts] = useState([]);
-  const { data, loading } = useFetch('products');
+  const { data, loading } = useFetch('/src/products.json');
 
   useEffect(() => {
     if (data) {
@@ -19,7 +19,7 @@ function Products() {
   return (
     <div>
       <h1>Products Page</h1>
-      {products.map((product) => (
+      {data.products.map((product) => (
         <div key={product.id}>
           <Link to={`/products/${product.id}`}>
             <img src={product.image} alt={product.title} />

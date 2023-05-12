@@ -1,36 +1,50 @@
-import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import useFetch from '../hooks/useFetch';
+import { useState, useEffect } from 'react';
+import { useParams, useHistory } from 'react-router-dom';
+import axios from 'axios';
 
 function ProductDetail() {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
-  const { data, loading } = useFetch(`https://fakestoreapi.com/products/${id}`);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const history = useHistory();
 
   useEffect(() => {
-    if (data) {
-      setProduct(data);
-    }
-  }, [data]);
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`https://fakestoreapi.com/products/${id}`);
+        setProduct(response.data);
+      } catch (err) {
+        setError(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [id]);
+
+  const handleBack = () => {
+    history.goBack();
+  };
 
   if (loading) {
     return <div>Loading...</div>;
   }
 
-  if (!product) {
-    return <div>Error</div>
+  if (error) {
+    return <div>Error: {error.message}</div>;
   }
 
   return (
     <div>
-      <img src={data.image} alt={data.title} />
-      <h2>{data.title}</h2>
-      <p>{data.description}</p>
-      <button onClick={() => history.goBack()}>Back</button>
+      <h2>{product.name}</h2>
+      <img src={product.image} alt={product.name} />
+      <p>{product.description}</p>
+      <p>{product.price}</p>
+      <button onClick={handleBack}>Back</button>
     </div>
   );
-
 }
 
 export default ProductDetail;
-// test 

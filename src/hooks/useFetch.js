@@ -4,8 +4,8 @@ import axios from "axios";
 
 const baseURL = 'http://localhost:5173';
 
-const useFetch = (baseURL) => {
-    const [data, setData] = useState([]);
+const useFetch = (url) => {
+    const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(undefined);
 
@@ -14,8 +14,8 @@ const useFetch = (baseURL) => {
     const getData = async () => {
         setError(undefined);
       try{
-        const response = await axios.get(`${baseURL}/${url}`);
-        setPosts(response.data);
+        const response = await axios.get(url);
+        setData(response.data);
       } catch (error) {
         console.log(error);
       } finally {
