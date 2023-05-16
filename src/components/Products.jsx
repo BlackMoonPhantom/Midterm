@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import useFetch from '../hooks/useFetch';
+import { ThemeContext } from "../ThemeContext";
+import ToggleSwitch from './ToggleSwitch';
 
 function Products() {
   const [products, setProducts] = useState([]);
@@ -11,12 +13,15 @@ function Products() {
     return <div>Loading...</div>;
   }
 
+  
+  const{toggleTheme, theme} = useContext(ThemeContext); 
+
   return (
-    <div>
+    <div style={{backgroundColor: theme.background, color: theme.color}}>
       <h1>Products Page</h1>
       {data.map((product) => (
         <div key={product.id}>
-          <Link to={`/products/${product.id}`}>
+          <Link to={`/products/${product.id}`} style={{backgroundColor: theme.background, color: theme.color}}>
             <img src={product.image} alt={product.title} />
             <h3>{product.title}</h3>
           </Link>

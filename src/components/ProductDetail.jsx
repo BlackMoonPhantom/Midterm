@@ -1,9 +1,12 @@
-import { useState, useEffect } from 'react';
+import { useContext } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
-import axios from 'axios';
 import useFetch from '../hooks/useFetch';
+import axios from 'axios';
+import { ThemeContext, themes } from '../ThemeContext';
 
 function ProductDetail() {
+
+  const{toggleTheme, theme} = useContext(ThemeContext); 
   
   const { id } = useParams();
   const history = useHistory();
@@ -22,11 +25,11 @@ function ProductDetail() {
   }
 
   return (
-    <div>
-      <h2>{product.title}</h2>
+    <div >
+      <h2 style={{backgroundColor: theme.background, color: theme.color}}>{product.title}</h2>
       <img src={product.image} alt={product.name} />
-      <p>{product.description}</p>
-      <p id='price'>{product.price}</p>
+      <p style={{backgroundColor: theme.background, color: theme.color}}>{product.description} </p>
+      <p id='price' style={{backgroundColor: theme.background, color: theme.color}}>{product.price}</p>
       <button onClick={handleBack}>Back</button>
     </div>
   );
