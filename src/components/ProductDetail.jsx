@@ -1,35 +1,38 @@
-import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useContext } from 'react';
+import { useParams, useHistory } from 'react-router-dom';
 import useFetch from '../hooks/useFetch';
+import axios from 'axios';
+import { ThemeContext, themes } from '../ThemeContext';
 
 function ProductDetail() {
-  const { id } = useParams();
-  const [product, setProduct] = useState(null);
-  const { data, loading } = useFetch(`https://fakestoreapi.com/products/${id}`);
 
-  useEffect(() => {
-    if (data) {
-      setProduct(data);
-    }
-  }, [data]);
+  const{toggleTheme, theme} = useContext(ThemeContext); 
+  
+  const { id } = useParams();
+  const history = useHistory();
+  const { data: product, loading, error }= useFetch(`products/${id}`);
+  
+  const handleBack = () => {
+    history.goBack();
+  };
 
   if (loading) {
     return <div>Loading...</div>;
   }
 
-  if (!product) {
-    return <div>Error</div>
+  if (error) {
+    return <div>Error: {error.message}</div>;
   }
 
   return (
-    <div>
-      <img src={data.image} alt={data.title} />
-      <h2>{data.title}</h2>
-      <p>{data.description}</p>
-      <button onClick={() => history.goBack()}>Back</button>
+    <div >
+      <h2 style={{backgroundColor: theme.background, color: theme.color}}>{product.title}</h2>
+      <img src={product.image} alt={product.name} />
+      <p style={{backgroundColor: theme.background, color: theme.color}}>{product.description} </p>
+      <p id='price' style={{backgroundColor: theme.background, color: theme.color}}>{product.price}</p>
+      <button onClick={handleBack}>Back</button>
     </div>
   );
-
 }
 
 export default ProductDetail;
